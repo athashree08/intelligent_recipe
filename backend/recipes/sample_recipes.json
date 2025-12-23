@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Tomato Omelette",
+    "ingredients": ["tomato", "egg", "onion", "salt"],
+    "cook_time": 10,
+    "difficulty": "Easy",
+    "cuisine": "Indian"
+  },
+  {
+    "id": 2,
+    "name": "Banana Smoothie",
+    "ingredients": ["banana", "milk", "sugar"],
+    "cook_time": 5,
+    "difficulty": "Easy",
+    "cuisine": "Continental"
+  },
+  {
+    "id": 3,
+    "name": "Tomato Salad",
+    "ingredients": ["tomato", "onion", "olive oil", "salt"],
+    "cook_time": 5,
+    "difficulty": "Easy",
+    "cuisine": "Mediterranean"
+  },
+  {
+    "id": 4,
+    "name": "Fruit Bowl",
+    "ingredients": ["banana", "apple", "orange"],
+    "cook_time": 3,
+    "difficulty": "Easy",
+    "cuisine": "Universal"
+  }
+]
