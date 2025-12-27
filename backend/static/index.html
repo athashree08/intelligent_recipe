@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Intelligent Recipe Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="card">
-    <h1>Intelligent Recipe Generator</h1>
-    <input type="file" id="imageInput">
-    <button onclick="analyze()">Analyze</button>
 
-    <img id="preview" />
-    <div id="result"></div>
+  <h1>🔍 Intelligent Recipe Generator</h1>
+
+  <!-- ===== Milestone 1 ===== -->
+  <div class="card">
+    <h2>Upload Ingredient Image</h2>
+    <input type="file" id="imageInput">
+    <button onclick="analyzeImage()">Analyze Image</button>
+
+    <div id="analysisResult"></div>
   </div>
 
-<script src="script.js"></script>
+  <!-- ===== Milestone 2 ===== -->
+  <div class="card">
+    <h2>Enter Ingredients</h2>
+    <input id="ingredientsInput" placeholder="banana,milk,egg">
+    <button onclick="getRecipes()">Get Recipes</button>
+  </div>
+
+  <div class="card">
+    <h2>Recommended Recipes</h2>
+    <ul id="recipeResults"></ul>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
