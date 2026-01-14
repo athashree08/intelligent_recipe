@@ -1,348 +1,133 @@
-# 🍳 Intelligent Recipe Generator
+# Pantry2Plate – Intelligent Recipe Generator
 
-An AI-powered recipe recommendation system that uses computer vision and machine learning to detect ingredients from images and suggest personalized recipes.
+**Smart cooking made simple: From photo to feast in seconds.**
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![React](https://img.shields.io/badge/React-18.2-61dafb)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
-![MongoDB](https://img.shields.io/badge/MongoDB-6.0-green)
+## Project Overview
 
-## ✨ Features
+Pantry2Plate is an AI-powered web application designed to solve the common household dilemma of "what to cook?" by generating personalized recipes based on ingredients already available at home. The system leverages computer vision to automatically detect ingredients from user-uploaded images and utilizes natural language processing (LLMs) to craft detailed, step-by-step cooking instructions.
 
-### 🤖 AI Ingredient Detection
-- **93% accuracy** ingredient recognition using MobileNetV2
-- Trained on 10 common ingredients: apple, banana, tomato, onion, potato, carrot, cucumber, orange, lemon, corn
-- Real-time image processing and prediction
+This solution reduces food waste, saves time on meal planning, and encourages home cooking through an intuitive and modern web interface.
 
-### 📝 OCR for Packaged Foods
-- Extract ingredient lists from food package labels using Tesseract OCR
-- Automatic text parsing and ingredient extraction
-- Support for various label formats
+## Core Features
 
-### 🎯 Smart Recipe Recommendations
-- **Primary ingredient filtering** - Shows recipes containing your highest-confidence detected ingredient
-- Hybrid recommendation system (90% ingredient match + 10% content similarity)
-- Deduplication and relevance filtering
-- 81 professional recipes from TheMealDB API
+- **Ingredient Detection**: Instantly identifies ingredients from photos using advanced image processing (MobileNetV2/Food-101) and OCR technology.
+- **AI Recipe Generation**: Generates complete, unique recipes with cooking steps, nutritional information, and dietary tags using OpenAI's GPT models.
+- **Nutrition Analysis**: improved accuracy for calorie and nutrient tracking using USDA FoodData Central integration.
+- **Smart Search & Filters**: Allows users to manually add ingredients and filter recipes by cuisine, dietary restrictions (Vegan, Gluten-Free), and cooking time.
+- **User Dashboard**: Personalized experience for saving favorite recipes and managing dietary preferences.
+- **Responsive Design**: Modern, distinct aesthetics featuring an organic "La Petite Cuisine" theme with seamless navigation.
 
-### 🎨 Modern Food-Centric UI
-- Zomato/Swiggy-inspired design with Tailwind CSS
-- Warm color palette (oranges, reds, neutrals)
-- Fully responsive (mobile, tablet, desktop)
-- Real food photography from TheMealDB
-- Save/unsave recipes with localStorage persistence
-- Recipe rating system (1-5 stars)
+## System Architecture
 
-## 🏗️ Architecture
+The application follows a modular client-server architecture:
 
-### Backend (Flask + Python)
+1.  **Frontend**: Built with React and Tailwind CSS, handling user interactions, image uploads, and data visualization.
+2.  **Backend API**: A Flask-based RESTful API that manages authentication, image processing requests, and external API integrations.
+3.  **AI/ML Service**: 
+    -   **Vision Layer**: Processes images to extract ingredient labels.
+    -   **LLM Layer**: Synthesizes ingredients into cohesive recipes.
+4.  **Database**: MongoDB stores user profiles, saved recipes, and cached ingredient data to minimize API costs and latency.
+
+## Folder Structure
+
 ```
-backend/
-├── app.py                          # Flask application entry point
-├── models/
-│   ├── ingredient_recognition.py  # MobileNetV2 model wrapper
-│   ├── train_subset.py            # Model training script
-│   └── database.py                # MongoDB interface
-├── routes/
-│   ├── auth_routes.py             # JWT authentication
-│   ├── image_routes.py            # Image upload & processing
-│   └── recipe_routes.py           # Recipe CRUD & recommendations
-├── utils/
-│   ├── ingredient_matcher.py      # Fuzzy ingredient matching
-│   ├── recommendation_engine.py   # Hybrid recommendation algorithm
-│   ├── ocr_processor.py           # Tesseract OCR integration
-│   └── image_preprocessing.py     # Image preprocessing pipeline
-└── fetch_mealdb_recipes.py        # TheMealDB API integration
+intelligent_recipe/
+├── backend/                # Flask API and core logic
+│   ├── app.py              # Application entry point
+│   ├── routes/             # API endpoints (auth, recipes, images)
+│   ├── models/             # Database models and ML binaries
+│   ├── utils/              # Helper functions (OCR, Nutrition API)
+│   ├── image_processing/   # Vision processing logic
+│   └── requirements.txt    # Python dependencies
+├── frontend/               # React application
+│   ├── src/                # Components, pages, and hooks
+│   ├── public/             # Static assets
+│   └── tailwind.config.js  # Styling configuration
+└── README.md               # Project documentation
 ```
 
-### Frontend (React + Vite)
-```
-frontend/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx             # Navigation bar
-│   │   └── RecipeCard.jsx         # Recipe card component
-│   ├── pages/
-│   │   ├── Home.jsx               # Landing page
-│   │   ├── Upload.jsx             # Image upload (ML + OCR modes)
-│   │   ├── RecipeList.jsx         # Recipe grid with filters
-│   │   ├── RecipeDetail.jsx       # Full recipe view
-│   │   ├── SavedRecipes.jsx       # Bookmarked recipes
-│   │   └── Login.jsx              # Authentication
-│   ├── context/
-│   │   └── AuthContext.jsx        # Auth state management
-│   └── index.css                  # Tailwind + custom styles
-└── tailwind.config.js             # Design system configuration
-```
+## Setup & Installation
 
-## 🚀 Getting Started
+Follow these steps to set up the project locally.
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- MongoDB 6.0+
-- Tesseract OCR (for OCR features)
+- Python 3.8+
+- Node.js 14+ and npm
+- MongoDB installed and running locally
 
-### Installation
-
-#### 1. Clone Repository
+### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/athashree08/intelligent_recipe.git
 cd intelligent_recipe
 ```
 
-#### 2. Backend Setup
+### 2. Backend Setup
+Create a virtual environment and store your API keys safely.
+
 ```bash
 cd backend
-
-# Create virtual environment
 python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your MongoDB URI and JWT secret
-
-# Download trained model
-# Place model files in backend/models/saved_models/
 ```
 
-#### 3. Frontend Setup
-```bash
-cd frontend
+**Environment Configuration**:
+Create a `.env` file in the `backend/` directory:
+```env
+MONGO_URI=mongodb://localhost:27017/intelligent_recipe
+JWT_SECRET_KEY=your_secure_random_key
+OPENAI_API_KEY=your_openai_api_key
+USDA_API_KEY=your_usda_api_key
+```
 
-# Install dependencies
+### 3. Frontend Setup
+```bash
+cd ../frontend
 npm install
-
-# Start development server
-npm run dev
 ```
 
-#### 4. Install Tesseract OCR (Optional)
-**Windows:**
-1. Download from: https://github.com/UB-Mannheim/tesseract/wiki
-2. Install to: `C:\Program Files\Tesseract-OCR\`
-3. Path is already configured in `ocr_processor.py`
+### 4. Running the Application
+Open two terminal windows:
 
-**Linux:**
-```bash
-sudo apt-get install tesseract-ocr
-```
-
-**Mac:**
-```bash
-brew install tesseract
-```
-
-### Running the Application
-
-#### Start Backend
+**Terminal 1 (Backend):**
 ```bash
 cd backend
-venv\Scripts\activate
 python app.py
 ```
-Backend runs on: **http://localhost:5000**
 
-#### Start Frontend
+**Terminal 2 (Frontend):**
 ```bash
 cd frontend
 npm run dev
 ```
-Frontend runs on: **http://localhost:5173**
 
-## 📖 Usage
+The application will be accessible at `http://localhost:5173`.
 
-### 1. AI Ingredient Detection
-1. Navigate to **Upload** page
-2. Select **🤖 AI Detection** mode
-3. Upload photo of fresh ingredient (e.g., banana)
-4. View recipes containing that ingredient
+## How It Works
 
-### 2. OCR for Packaged Foods
-1. Navigate to **Upload** page
-2. Select **📝 OCR (Labels)** mode
-3. Upload photo of food package ingredient list
-4. View recipes using extracted ingredients
+1.  **Image Input**: The user takes a photo of their pantry or fridge.
+2.  **Processing**: The backend receives the image. Specialized OCR and classification algorithms analyze the visual data to list detected ingredients (e.g., "Tomato," "Eggs," "Basil").
+3.  **Recipe Synthesis**: This list is augmented with user preferences and sent to the LLM (Large Language Model), which constructs a valid recipe.
+4.  **Nutrition Calculation**: Use the USDA database to calculate precise nutritional values based on ingredient quantities.
+5.  **Output**: The user sees a beautiful recipe card with instructions, time estimates, and match percentages.
 
-### 3. Browse Recipes
-- View all 81 professional recipes
-- Filter by cuisine, dietary type, cooking time
-- Save favorites for later
-- Rate recipes (1-5 stars)
+## Security & API Key Management
 
-### 4. Recipe Details
-- View full recipe with hero image
-- See ingredients list
-- Follow step-by-step instructions
-- Check nutritional information
+-   **Environment Variables**: All sensitive keys (OpenAI, JWT, USDA) are stored strictly in `.env` files which are git-ignored.
+-   **No Hardcoding**: The codebase contains no hardcoded secrets.
+-   **Authentication**: User sessions are secured using JWT (JSON Web Tokens) with secure HTTP-only practices.
 
-## 🎯 Model Performance
+## Future Scope
 
-### Ingredient Recognition Model
-- **Architecture:** MobileNetV2 (transfer learning)
-- **Training Strategy:** Two-phase training
-  - Phase 1: Train top layers (10 epochs)
-  - Phase 2: Fine-tune last 20 layers (40 epochs)
-- **Validation Accuracy:** 93%
-- **Dataset:** Kaggle Fruit and Vegetable Image Recognition (subset)
-- **Trained Ingredients:** apple, banana, tomato, onion, potato, carrot, cucumber, orange, lemon, corn
+-   **Mobile App**: Development of a native React Native application for easier camera access.
+-   **Pantry Tracking**: Persistent inventory management to track expiration dates.
+-   **Social Features**: Ability to share creations and cook with friends.
+-   **Fine-tuned Models**: Training a custom LLaMA model specifically for culinary tasks to reduce API dependency.
 
-### Recommendation Algorithm
-- **Primary Ingredient Filtering:** Shows only recipes containing highest-confidence ingredient
-- **Hybrid Scoring:** 90% ingredient match + 10% content similarity (TF-IDF)
-- **Deduplication:** Removes duplicate recipes by name
-- **Relevance Threshold:** Filters out low-match recipes
+## License
 
-## 🗄️ Database Schema
-
-### Recipes Collection
-```javascript
-{
-  name: String,
-  cuisine: String,
-  dietary_type: String,
-  cooking_time: Number,
-  ingredients: [{
-    name: String,
-    quantity: String,
-    unit: String
-  }],
-  instructions: [String],
-  image_url: String,  // TheMealDB image
-  nutrition: {
-    calories: Number,
-    protein: Number,
-    carbs: Number,
-    fats: Number
-  }
-}
-```
-
-### Users Collection
-```javascript
-{
-  username: String (unique),
-  email: String (unique),
-  password: String (hashed),
-  created_at: Date
-}
-```
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary:** `#FF6B35` (warm orange)
-- **Secondary:** `#F7931E` (golden)
-- **Accent:** `#C1121F` (red)
-- **Neutral:** `#2D3142` to `#F8F9FA`
-
-### Typography
-- **Headings:** Poppins (bold, display)
-- **Body:** Inter (clean, readable)
-
-### Components
-- Modern recipe cards with real food photography
-- Responsive grid layouts
-- Smooth transitions and hover effects
-- Glassmorphism and subtle shadows
-
-## 📊 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-
-### Image Processing
-- `POST /api/image/recognize` - AI ingredient detection
-- `POST /api/image/ocr` - OCR ingredient extraction
-
-### Recipes
-- `GET /api/recipes` - Get all recipes
-- `GET /api/recipes/:id` - Get recipe details
-- `POST /api/recipes/recommend` - Get recommendations
-- `GET /api/recipes/search` - Search with filters
-
-## 🔧 Configuration
-
-### Environment Variables (.env)
-```env
-# MongoDB
-MONGO_URI=mongodb://localhost:27017/intelligent_recipe
-
-# JWT
-JWT_SECRET_KEY=your-secret-key-here
-
-# Flask
-FLASK_DEBUG=True
-MAX_CONTENT_LENGTH=5242880  # 5MB
-
-# Upload
-UPLOAD_FOLDER=uploads
-```
-
-### Tailwind Config
-Custom design tokens in `frontend/tailwind.config.js`:
-- Colors, fonts, shadows, border radius
-- Responsive breakpoints
-- Custom component classes
-
-## 🧪 Testing
-
-### Backend Tests
-```bash
-cd backend
-pytest tests/
-```
-
-### Frontend Tests
-```bash
-cd frontend
-npm test
-```
-
-## 📦 Deployment
-
-See `INTERNSHIP_OPTIMIZATION.md` for detailed deployment guides:
-- Heroku deployment
-- AWS deployment
-- Docker containerization
-- CI/CD with GitHub Actions
-
-## 🤝 Contributing
-
-This is an academic project. For improvements:
-1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Submit pull request
-
-## 📝 License
-
-This project is for educational purposes.
-
-## 👥 Authors
-
-- **Athashree** - Initial work and development
-
-## 🙏 Acknowledgments
-
-- **TheMealDB** - Recipe data and images
-- **Kaggle** - Fruit and Vegetable dataset
-- **MobileNetV2** - Pre-trained model
-- **Tesseract OCR** - Text extraction
-- **Tailwind CSS** - UI framework
-
-## 📞 Support
-
-For issues or questions:
-- Create an issue in the repository
-- Check `INTERNSHIP_OPTIMIZATION.md` for deployment help
-
----
-
-**Built with ❤️ for intelligent recipe recommendations**
+This project is licensed under the MIT License - see the LICENSE file for details.
