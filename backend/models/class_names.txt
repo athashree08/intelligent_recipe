@@ -1,0 +1,10 @@
+apple
+banana
+carrot
+corn
+cucumber
+lemon
+onion
+orange
+potato
+tomato

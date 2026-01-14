@@ -1,0 +1,56 @@
+Recipe: Banana Pancakes
+
+Ingredient breakdown:
+================================================================================
+
+banana:
+  Quantity: 1 large unit
+  Matched: Bananas, raw
+  Estimated grams: 150.0g
+  Calories/100g: 89.0
+  Total calories: 134
+
+eggs:
+  Quantity: 2 medium unit
+  Matched: Egg, white, raw, fresh
+  Estimated grams: 200.0g
+  Calories/100g: 52.0
+  Total calories: 104
+
+baking powder:
+  Quantity: pinch unit
+  Matched: Abiyuch, raw
+  Estimated grams: 0.5g
+  Calories/100g: 69.0
+  Total calories: 0
+
+vanilla extract:
+  Quantity: spinkling unit
+  Matched: Vanilla extract
+  Estimated grams: 100.0g
+  Calories/100g: 288.0
+  Total calories: 288
+
+oil:
+  Quantity: 1 tsp unit
+  Matched: Abiyuch, raw
+  Estimated grams: 5.0g
+  Calories/100g: 69.0
+  Total calories: 3
+
+pecan nuts:
+  Quantity: 25g unit
+  Matched: Nuts, pecans, halves, raw
+  Estimated grams: 25.0g
+  Calories/100g: 750.2
+  Total calories: 188
+
+raspberries:
+  Quantity: 125g unit
+  Matched: Raspberries, raw
+  Estimated grams: 125.0g
+  Calories/100g: 57.3
+  Total calories: 72
+
+================================================================================
+TOTAL CALORIES: 788

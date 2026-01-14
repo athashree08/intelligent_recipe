@@ -1,50 +1,72 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from PIL import Image
-import io
+from flask import Flask, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
 import os
 
-from image_processing.preprocess import preprocess_image
-from model.ingredient_model import predict_ingredients
-from image_processing.ocr import extract_text
-from database.db import SessionLocal
-from recommender.matcher import match_recipes
+# Load environment variables
+load_dotenv()
 
-app = FastAPI(title="Intelligent Recipe Generator")
+# Import routes
+from routes.auth_routes import auth_bp
+from routes.image_routes import image_bp
+from routes.recipe_routes import recipe_bp
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+# Create Flask app
+app = Flask(__name__)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Configuration
+app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'default-secret-key')
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 5 * 1024 * 1024))  # 5MB
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')
 
-app.mount(
-    "/static",
-    StaticFiles(directory=os.path.join(BASE_DIR, "static")),
-    name="static",
-)
+# Enable CORS
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-@app.post("/analyze")
-async def analyze_image(file: UploadFile = File(...)):
-    image_bytes = await file.read()
-    image = Image.open(io.BytesIO(image_bytes))
+# Register blueprints
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(image_bp, url_prefix='/api/image')
+app.register_blueprint(recipe_bp, url_prefix='/api/recipes')
 
-    processed = preprocess_image(image)
-    cnn_results = predict_ingredients(processed)
-    ocr_results = extract_text(image)
+# Root route
+@app.route('/')
+def index():
+    return jsonify({
+        'message': 'Intelligent Recipe Generator API',
+        'version': '1.0.0',
+        'endpoints': {
+            'auth': '/api/auth',
+            'image': '/api',
+            'recipes': '/api/recipes'
+        }
+    })
 
-    return {
-        "cnn_ingredients": cnn_results,
-        "ocr_ingredients": ocr_results
-    }
+# Health check
+@app.route('/health')
+def health():
+    return jsonify({'status': 'healthy'}), 200
 
-@app.post("/recommend")
-def recommend_endpoint(ingredients: list[str]):
-    db = SessionLocal()
-    results = match_recipes(db, ingredients)
-    db.close()
-    return results
+# Error handlers
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'message': 'Endpoint not found'}), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({'message': 'Internal server error'}), 500
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return jsonify({'message': 'File too large. Maximum size is 5MB'}), 413
+
+if __name__ == '__main__':
+    # Create necessary directories
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    os.makedirs('models', exist_ok=True)
+    
+    # Run app
+    debug_mode = os.getenv('FLASK_DEBUG', 'True') == 'True'
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=debug_mode
+    )
