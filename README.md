@@ -1,10 +1,10 @@
-# Pantry2Plate – Intelligent Recipe Generator
+# Snap2Serve – Intelligent Recipe Generator
 
 **Smart cooking made simple: From photo to feast in seconds.**
 
 ## Project Overview
 
-Pantry2Plate is an AI-powered web application designed to solve the common household dilemma of "what to cook?" by generating personalized recipes based on ingredients already available at home. The system leverages computer vision to automatically detect ingredients from user-uploaded images and utilizes natural language processing (LLMs) to craft detailed, step-by-step cooking instructions.
+Snap2Serve is an AI-powered web application designed to solve the common household dilemma of "what to cook?" by generating personalized recipes based on ingredients already available at home. The system leverages computer vision to automatically detect ingredients from user-uploaded images and utilizes natural language processing (LLMs) to craft detailed, step-by-step cooking instructions.
 
 This solution reduces food waste, saves time on meal planning, and encourages home cooking through an intuitive and modern web interface.
 
